@@ -80,6 +80,9 @@ export default function UserManagement() {
     const apiKey = process.env.NEXT_PUBLIC_API_KEY;
     const Authorization = `Bearer ${accessToken}`;
 
+    console.log('apikey', apiKey);
+    console.log('Authorization', Authorization)
+
     const fetchUserRole = async () => {
         if (!apiKey || !Authorization || !userId) {
             console.error("Token de acesso, Authorization ou user_id não encontrado.");
