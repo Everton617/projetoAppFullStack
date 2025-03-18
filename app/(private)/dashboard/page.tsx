@@ -59,16 +59,23 @@ export default function UserManagement() {
     const [endereco, setEndereco] = useState("");
     const [filter, setFilter] = useState("");
     const [userRole, setUserRole] = useState<number | null>(null);
+    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
 
-    const accessToken = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('access_token='))
-        ?.split('=')[1];
-
-    const userId = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('user_id='))
-        ?.split('=')[1];
+    useEffect(() => {
+        const token = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('access_token='))
+            ?.split('=')[1];
+    
+        const id = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('user_id='))
+            ?.split('=')[1];
+    
+        setAccessToken(token || null);
+        setUserId(id || null);
+    }, []);
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY;
     const Authorization = `Bearer ${accessToken}`;
