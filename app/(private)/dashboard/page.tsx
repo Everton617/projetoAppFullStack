@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import * as yup from 'yup';
+import { userSchema } from "@/app/utils/userSchema";
 
 // Tipo para os usuários
 type User = {
@@ -37,12 +38,6 @@ type User = {
     created_at: string;
     tipo?: number;
 };
-
-
-const userSchema = yup.object().shape({
-    name: yup.string().required('O nome é obrigatório').min(5, 'O nome deve ter pelo menos 5 caracteres'),
-    email: yup.string().required('O email é obrigatório').email('Digite um email válido'),
-});
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
@@ -62,7 +57,7 @@ export default function UserManagement() {
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
 
-    useEffect(() => {
+ 
         const token = document.cookie
             .split('; ')
             .find(row => row.startsWith('access_token='))
@@ -75,14 +70,12 @@ export default function UserManagement() {
     
         setAccessToken(token || null);
         setUserId(id || null);
-    }, []);
+  
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY;
     const Authorization = `Bearer ${accessToken}`;
 
-    console.log('apikey', apiKey);
-    console.log('Authorization', Authorization)
-
+    
     const fetchUserRole = async () => {
         if (!apiKey || !Authorization || !userId) {
             console.error("Token de acesso, Authorization ou user_id não encontrado.");
