@@ -54,8 +54,7 @@ export default function UserManagement() {
     const [endereco, setEndereco] = useState("");
     const [filter, setFilter] = useState("");
     const [userRole, setUserRole] = useState<number | null>(null);
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
+    
 
  
         const token = document.cookie
@@ -68,22 +67,21 @@ export default function UserManagement() {
             .find(row => row.startsWith('user_id='))
             ?.split('=')[1];
     
-        setAccessToken(token || null);
-        setUserId(id || null);
+    
   
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-    const Authorization = `Bearer ${accessToken}`;
+    const Authorization = `Bearer ${token}`;
 
     
     const fetchUserRole = async () => {
-        if (!apiKey || !Authorization || !userId) {
+        if (!apiKey || !Authorization || !id) {
             console.error("Token de acesso, Authorization ou user_id não encontrado.");
             return;
         }
         try {
             const response = await fetch(
-                `https://ydveksuwasawwzmhuhew.supabase.co/rest/v1/users?id=eq.${userId}`,
+                `https://ydveksuwasawwzmhuhew.supabase.co/rest/v1/users?id=eq.${id}`,
                 {
                     headers: {
                         apikey: apiKey,
