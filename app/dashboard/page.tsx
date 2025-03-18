@@ -54,27 +54,21 @@ export default function UserManagement() {
     const [endereco, setEndereco] = useState("");
     const [filter, setFilter] = useState("");
     const [userRole, setUserRole] = useState<number | null>(null);
-    
 
- 
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+    
+    const fetchUserRole = async () => {
         const token = document.cookie
             .split('; ')
             .find(row => row.startsWith('access_token='))
             ?.split('=')[1];
-    
+        const Authorization = `Bearer ${token}`;
+
         const id = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('user_id='))
-            ?.split('=')[1];
-    
-    
-  
+        .split('; ')
+        .find(row => row.startsWith('user_id='))
+        ?.split('=')[1]
 
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-    const Authorization = `Bearer ${token}`;
-
-    
-    const fetchUserRole = async () => {
         if (!apiKey || !Authorization || !id) {
             console.error("Token de acesso, Authorization ou user_id não encontrado.");
             return;
@@ -106,6 +100,12 @@ export default function UserManagement() {
     };
 
     const fetchUsers = async () => {
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('access_token='))
+        ?.split('=')[1];
+    const Authorization = `Bearer ${token}`;
+
         if (!apiKey || !Authorization) {
             console.error("Token de acesso ou Authorization não encontrado.");
             return;
@@ -153,6 +153,11 @@ export default function UserManagement() {
     };
 
     const handleDeleteUser = async () => {
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('access_token='))
+        ?.split('=')[1];
+    const Authorization = `Bearer ${token}`;
         if (!apiKey || !Authorization) {
             console.error("Token de acesso ou Authorization não encontrado.");
             return;
@@ -202,6 +207,11 @@ export default function UserManagement() {
     };
 
     const handleSaveUser = async () => {
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('access_token='))
+        ?.split('=')[1];
+    const Authorization = `Bearer ${token}`;
         if (userRole !== 1) {
             toast.error("Apenas Administradores podem editar usuários.", {
                 style: {
@@ -309,6 +319,11 @@ export default function UserManagement() {
     };
 
     const handleSaveAddress = async () => {
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('access_token='))
+        ?.split('=')[1];
+    const Authorization = `Bearer ${token}`;
         if (!currentUser) return;
 
         if (userRole !== 1) {
