@@ -1,4 +1,4 @@
-'use client'
+
 
 import { useState, useEffect } from "react";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
